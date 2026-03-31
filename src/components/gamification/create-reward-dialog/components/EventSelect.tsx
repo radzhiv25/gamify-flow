@@ -95,7 +95,7 @@ export function EventSelect(props: Props) {
         <SelectContent
           position="popper"
           align="start"
-          sideOffset={6}
+          sideOffset={3}
           className={cn(
             SELECT_CONTENT_CLASSNAME,
             "w-(--radix-select-trigger-width)",

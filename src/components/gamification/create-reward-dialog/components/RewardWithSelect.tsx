@@ -131,7 +131,7 @@ export function RewardWithSelect(props: Props) {
         <SelectContent
           position="popper"
           align="start"
-          sideOffset={6}
+          sideOffset={3}
           className={cn(
             SELECT_CONTENT_CLASSNAME,
             "w-(--radix-select-trigger-width)",
@@ -258,7 +258,7 @@ export function RewardWithSelect(props: Props) {
                   "group relative flex w-full cursor-default items-center gap-2 rounded-sm py-1.5 pr-14 pl-2 text-sm outline-hidden select-none",
                   props.commissionDisabledForEvent
                     ? "pointer-events-none opacity-50"
-                    : "text-text-grey-light hover:bg-primary-color-lightest hover:text-primary-color focus:bg-primary-color-lightest",
+                    : "hover:bg-primary-color-lightest hover:text-primary-color focus:bg-primary-color-lightest",
                 )}
                 onPointerDown={(e) => {
                   // prevent Radix Select from closing the menu on "selection"
