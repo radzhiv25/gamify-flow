@@ -1,4 +1,5 @@
 import { ChevronDownIcon, ChevronUpIcon } from "lucide-react"
+import { AnimatePresence, motion } from "motion/react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -105,29 +106,62 @@ export function EventSelect(props: Props) {
             {getEventOptionLabel(draftLikeForLabels, "crosses_sales")}
           </SelectItem>
 
-          {props.value === "crosses_sales" && (
-            <div className="pb-2" onPointerDown={(e) => e.stopPropagation()}>
-              <div className="mt-1 flex h-11 items-center gap-1 rounded-10 border border-primary-color bg-white px-3">
-                <span className="shrink-0 text-sm text-text-grey opacity-70">$</span>
-                <Input
-                  inputMode="decimal"
-                  className="h-9 flex-1 border-0 bg-transparent px-0 text-sm text-text-grey-light shadow-none placeholder:text-text-grey focus-visible:ring-0"
-                  placeholder="e.g. 100"
-                  value={props.pendingSalesAmount}
-                  onChange={(e) => props.setPendingSalesAmount(e.target.value)}
-                  aria-label="Sales target amount"
-                />
-              </div>
-            </div>
-          )}
+          <AnimatePresence initial={false}>
+            {props.value === "crosses_sales" && (
+              <motion.div
+                key="sales-inline"
+                className="pb-2"
+                onPointerDown={(e) => e.stopPropagation()}
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.18, ease: "easeOut" }}
+                style={{ overflow: "hidden" }}
+              >
+                <motion.div
+                  className="mt-1 flex h-11 items-center gap-1 rounded-10 border border-primary-color bg-white px-3"
+                  initial={{ y: -4 }}
+                  animate={{ y: 0 }}
+                  exit={{ y: -4 }}
+                  transition={{ duration: 0.18, ease: "easeOut" }}
+                >
+                  <span className="shrink-0 text-sm text-text-grey opacity-70">$</span>
+                  <Input
+                    inputMode="decimal"
+                    className="h-9 flex-1 border-0 bg-transparent px-0 text-sm text-text-grey-light shadow-none placeholder:text-text-grey focus-visible:ring-0"
+                    placeholder="e.g. 100"
+                    value={props.pendingSalesAmount}
+                    onChange={(e) => props.setPendingSalesAmount(e.target.value)}
+                    aria-label="Sales target amount"
+                  />
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           <SelectItem value="post_times">
             {getEventOptionLabel(draftLikeForLabels, "post_times")}
           </SelectItem>
 
-          {props.value === "post_times" && (
-            <div className="pb-2" onPointerDown={(e) => e.stopPropagation()}>
-              <div className="mt-1 grid grid-cols-2 gap-2">
+          <AnimatePresence initial={false}>
+            {props.value === "post_times" && (
+              <motion.div
+                key="posts-inline"
+                className="pb-2"
+                onPointerDown={(e) => e.stopPropagation()}
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.18, ease: "easeOut" }}
+                style={{ overflow: "hidden" }}
+              >
+                <motion.div
+                  className="mt-1 grid grid-cols-2 gap-2"
+                  initial={{ y: -4 }}
+                  animate={{ y: 0 }}
+                  exit={{ y: -4 }}
+                  transition={{ duration: 0.18, ease: "easeOut" }}
+                >
                 <Input
                   inputMode="numeric"
                   className="h-11 w-full rounded-10 border border-primary-color bg-white px-3 py-0 text-sm font-normal text-text-grey-light shadow-none placeholder:text-text-grey focus-visible:ring-0"
@@ -198,16 +232,27 @@ export function EventSelect(props: Props) {
                     ))}
                   </PopoverContent>
                 </Popover>
-              </div>
-            </div>
-          )}
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           <SelectItem value="onboarded">
             {getEventOptionLabel(draftLikeForLabels, "onboarded")}
           </SelectItem>
 
-          {showInlineFooter && (
-            <div className="pt-2" onPointerDown={(e) => e.stopPropagation()}>
+          <AnimatePresence initial={false}>
+            {showInlineFooter && (
+              <motion.div
+                key="inline-footer"
+                className="pt-2"
+                onPointerDown={(e) => e.stopPropagation()}
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.16, ease: "easeOut" }}
+                style={{ overflow: "hidden" }}
+              >
               <div className="grid grid-cols-2 gap-2">
                 <Button
                   type="button"
@@ -259,8 +304,9 @@ export function EventSelect(props: Props) {
                   </Button>
                 )}
               </div>
-            </div>
-          )}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </SelectContent>
       </Select>
     </div>

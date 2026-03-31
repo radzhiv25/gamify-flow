@@ -1,5 +1,6 @@
 import { useCallback, useRef, useState } from "react"
 import { CheckIcon, PencilIcon } from "lucide-react"
+import { AnimatePresence, motion } from "motion/react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -138,7 +139,14 @@ export function RewardWithSelect(props: Props) {
           )}
         >
           {props.value === "commission" && commissionView === "tiers" ? (
-            <div className="pb-2" onPointerDown={(e) => e.stopPropagation()}>
+            <motion.div
+              className="pb-2"
+              onPointerDown={(e) => e.stopPropagation()}
+              initial={{ opacity: 0, y: -6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.18, ease: "easeOut" }}
+            >
               <div className="px-1">
                 <div className="px-2 pb-2 pt-1 text-xs font-medium text-text-grey">
                   Select a commission tier
@@ -222,7 +230,7 @@ export function RewardWithSelect(props: Props) {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ) : (
             <>
               <SelectItem value="flat_bonus">
@@ -234,9 +242,25 @@ export function RewardWithSelect(props: Props) {
                 {getRewardOptionLabel(draftLikeForLabels, "commission")}
               </SelectItem>
 
-              {props.value === "flat_bonus" && (
-                <div className="pb-2" onPointerDown={(e) => e.stopPropagation()}>
-                  <div className="mt-1 flex h-11 items-center gap-1 rounded-10 border border-primary-color bg-white px-3">
+              <AnimatePresence initial={false}>
+                {props.value === "flat_bonus" && (
+                  <motion.div
+                    key="bonus-inline"
+                    className="pb-2"
+                    onPointerDown={(e) => e.stopPropagation()}
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.18, ease: "easeOut" }}
+                    style={{ overflow: "hidden" }}
+                  >
+                    <motion.div
+                      className="mt-1 flex h-11 items-center gap-1 rounded-10 border border-primary-color bg-white px-3"
+                      initial={{ y: -4 }}
+                      animate={{ y: 0 }}
+                      exit={{ y: -4 }}
+                      transition={{ duration: 0.18, ease: "easeOut" }}
+                    >
                     <span className="shrink-0 text-sm text-text-grey opacity-70">$</span>
                     <Input
                       inputMode="decimal"
@@ -246,11 +270,12 @@ export function RewardWithSelect(props: Props) {
                       onChange={(e) => props.setPendingBonusAmount(e.target.value)}
                       aria-label="Bonus amount"
                     />
-                  </div>
-                </div>
-              )}
+                    </motion.div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
-              <button
+              <motion.button
                 type="button"
                 role="option"
                 aria-disabled={props.commissionDisabledForEvent}
@@ -277,6 +302,9 @@ export function RewardWithSelect(props: Props) {
                   // Keep menu open and let parent sync pending values.
                   props.onOpenChange(true)
                 }}
+                whileHover={props.commissionDisabledForEvent ? undefined : { scale: 1.002 }}
+                whileTap={props.commissionDisabledForEvent ? undefined : { scale: 0.996 }}
+                transition={{ duration: 0.12, ease: "easeOut" }}
               >
                 <span className="flex-1 text-left">
                   {getRewardOptionLabel(draftLikeForLabels, "commission")}
@@ -306,12 +334,22 @@ export function RewardWithSelect(props: Props) {
                     <PencilIcon className="size-4 text-text-grey-light" />
                   </button>
                 ) : null}
-              </button>
+              </motion.button>
             </>
           )}
 
-          {showInlineFooter && (
-            <div className="pt-2" onPointerDown={(e) => e.stopPropagation()}>
+          <AnimatePresence initial={false}>
+            {showInlineFooter && (
+              <motion.div
+                key="inline-footer"
+                className="pt-2"
+                onPointerDown={(e) => e.stopPropagation()}
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.16, ease: "easeOut" }}
+                style={{ overflow: "hidden" }}
+              >
               <div className="grid grid-cols-2 gap-2">
                 <Button
                   type="button"
@@ -363,8 +401,9 @@ export function RewardWithSelect(props: Props) {
                   </Button>
                 )}
               </div>
-            </div>
-          )}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </SelectContent>
       </Select>
     </div>

@@ -9,6 +9,7 @@ import {
   type AppPageId,
 } from "@/lib/app-navigation"
 import { useState } from "react"
+import { AnimatePresence, motion } from "motion/react"
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -40,11 +41,21 @@ function App() {
               onOpenSidebar={() => setSidebarOpen(true)}
               title={navTitle}
             />
-            {activePage === "gamification" ? (
-              <GamificationHero />
-            ) : (
-              <WorkInProgress />
-            )}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activePage}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 6 }}
+                transition={{ duration: 0.22, ease: "easeOut" }}
+              >
+                {activePage === "gamification" ? (
+                  <GamificationHero />
+                ) : (
+                  <WorkInProgress />
+                )}
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
       </div>
