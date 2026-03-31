@@ -1,6 +1,7 @@
 import { type ReactNode, useCallback, useMemo, useRef, useState } from "react"
 import { format } from "date-fns"
 import { XIcon } from "lucide-react"
+import { motion } from "motion/react"
 
 import {
   Dialog,
@@ -249,20 +250,31 @@ function CreateRewardSystemDialog({ children }: CreateRewardSystemDialogProps) {
           "flex! flex-col! gap-0!",
         )}
       >
-        <DialogHeader className="relative space-y-0 pr-10 text-left">
-          <DialogTitle className="text-[22px] font-medium leading-7 tracking-tight text-text-grey">
-            Create your reward system
-          </DialogTitle>
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.18, ease: "easeOut" }}
+        >
+          <DialogHeader className="relative space-y-0 pr-10 text-left">
+            <DialogTitle className="text-[22px] font-medium leading-7 tracking-tight text-text-grey">
+              Create your reward system
+            </DialogTitle>
 
-          <DialogClose
-            className="absolute right-0 top-0 rounded-10 p-2 text-text-grey opacity-80 outline-none transition-opacity hover:opacity-100 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-            aria-label="Close dialog"
-          >
-            <XIcon className="size-5" aria-hidden />
-          </DialogClose>
-        </DialogHeader>
+            <DialogClose
+              className="absolute right-0 top-0 rounded-10 p-2 text-text-grey opacity-80 outline-none transition-all duration-200 ease-out hover:opacity-100 hover:bg-primary-color-lightest focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              aria-label="Close dialog"
+            >
+              <XIcon className="size-5" aria-hidden />
+            </DialogClose>
+          </DialogHeader>
+        </motion.div>
 
-        <div className="mt-6 flex flex-1 flex-col gap-6">
+        <motion.div
+          className="mt-6 flex flex-1 flex-col gap-6"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.22, ease: "easeOut", delay: 0.03 }}
+        >
           <EventSelect
             value={draft.eventType}
             open={eventMenuOpen}
@@ -307,20 +319,26 @@ function CreateRewardSystemDialog({ children }: CreateRewardSystemDialogProps) {
             onCalendarOpenChange={setCalendarOpen}
             onSelectDate={onSelectEndDate}
           />
-        </div>
+        </motion.div>
 
-        <DialogFooter
-          successActive={successActive}
-          canSubmit={gating.canSubmit}
-          canCreateCore={gating.canCreateCore}
-          needsCoreSelections={gating.needsCoreSelections}
-          needsSalesAmount={gating.needsSalesAmount}
-          needsPostInputs={gating.needsPostInputs}
-          needsBonusAmount={gating.needsBonusAmount}
-          needsCommissionPct={gating.needsCommissionPct}
-          needsEndDate={gating.needsEndDate}
-          onCreate={onCreate}
-        />
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.18, ease: "easeOut", delay: 0.06 }}
+        >
+          <DialogFooter
+            successActive={successActive}
+            canSubmit={gating.canSubmit}
+            canCreateCore={gating.canCreateCore}
+            needsCoreSelections={gating.needsCoreSelections}
+            needsSalesAmount={gating.needsSalesAmount}
+            needsPostInputs={gating.needsPostInputs}
+            needsBonusAmount={gating.needsBonusAmount}
+            needsCommissionPct={gating.needsCommissionPct}
+            needsEndDate={gating.needsEndDate}
+            onCreate={onCreate}
+          />
+        </motion.div>
       </DialogContent>
     </Dialog>
   )
