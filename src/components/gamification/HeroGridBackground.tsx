@@ -1,3 +1,5 @@
+import type { CSSProperties } from "react";
+
 const COLS = 12;
 /** 5 rows: top + bottom half-height, three full rows → 4×80.5 = 322 */
 const ROW_HEIGHTS = [40.25, 80.5, 80.5, 80.5, 40.25] as const;
@@ -27,13 +29,15 @@ type HeroGridBackgroundProps = {
  * 12×5 grid (hero 960×322): rows 1 and 5 half-visible; rows 2–4 full height.
  * Pale purple 4×2 block behind the headline (cols 5–8, rows 3–4); inner grid lines hidden so it reads as one panel.
  */
+const ENLIGHTEN_CYCLE_S = 4.8;
+
 export function HeroGridBackground({ className = "" }: HeroGridBackgroundProps) {
   const scatterKey = (c: number, r: number) => `${c}-${r}`;
   const scatterMap = new Map(SCATTER_HIGHLIGHTS.map((s) => [scatterKey(s.col, s.row), s.opacity]));
 
   return (
     <div
-      className={`pointer-events-none absolute inset-0 overflow-hidden bg-white ${className}`.trim()}
+      className={`absolute inset-0 overflow-hidden bg-white ${className}`.trim()}
       aria-hidden
     >
       <div
@@ -56,6 +60,10 @@ export function HeroGridBackground({ className = "" }: HeroGridBackgroundProps) 
           const opacityStyle =
             scatter && !center ? { opacity: scatter } : undefined;
 
+          // Stagger so cells “wake up” in a loose wave (deterministic, not random).
+          const enlightenDelay =
+            (((col1 - 1) + (row1 - 1) * COLS) * 0.06) % (ENLIGHTEN_CYCLE_S * 0.85);
+
           // Hide grid borders around the center faded panel so it reads as one block.
           // Vertical: panel spans cols 5–8, so hide edges for cells whose right edge touches cols 5–8
           // (i.e. col1 in 4–8) within panel rows 3–4.
@@ -73,7 +81,7 @@ export function HeroGridBackground({ className = "" }: HeroGridBackgroundProps) 
             <div
               key={i}
               className={[
-                "box-border",
+                "group/cell relative box-border",
                 bg,
                 "border-[#E3E3E3]",
                 col1 === 1 ? "border-l-[0.68px]" : "",
@@ -82,7 +90,17 @@ export function HeroGridBackground({ className = "" }: HeroGridBackgroundProps) 
                 borderB,
               ].join(" ")}
               style={opacityStyle}
-            />
+            >
+              <div
+                className="pointer-events-none absolute inset-0 bg-primary-color-lightest transition-opacity duration-300 ease-out animate-[hero-grid-enlighten_var(--cell-cycle)_ease-in-out_infinite] group-hover/cell:opacity-[0.78]! group-hover/cell:paused"
+                style={
+                  {
+                    "--cell-cycle": `${ENLIGHTEN_CYCLE_S}s`,
+                    animationDelay: `${enlightenDelay}s`,
+                  } as CSSProperties
+                }
+              />
+            </div>
           );
         })}
       </div>

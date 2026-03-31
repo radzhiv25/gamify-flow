@@ -3,10 +3,11 @@
 import { Bell, CircleUserRound, Menu } from "lucide-react"
 
 type NavbarProps = {
-    onOpenSidebar: () => void;
-};
+  onOpenSidebar: () => void
+  title: string
+}
 
-const navbar = ({ onOpenSidebar }: NavbarProps) => {
+const navbar = ({ onOpenSidebar, title }: NavbarProps) => {
   return (
     <div className="flex items-center justify-between py-4 text-text-grey">
         <button
@@ -18,7 +19,7 @@ const navbar = ({ onOpenSidebar }: NavbarProps) => {
             <Menu className="size-5" />
         </button>
 
-        <h1 className="font-semibold text-xl">Gamification</h1>
+        <h1 className="font-semibold text-xl text-text-grey">{title}</h1>
 
         <span className="flex items-center gap-4">
             <Bell/>

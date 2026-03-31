@@ -1,18 +1,19 @@
-import { Brain, Home, BriefcaseBusiness, ClipboardList, Wallet, User } from "lucide-react";
+import { User } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+import {
+  SIDEBAR_MAIN_ITEMS,
+  type AppPageId,
+} from "@/lib/app-navigation"
 
 type SidebarProps = {
-    open: boolean;
-    onClose: () => void;
-};
+  open: boolean
+  onClose: () => void
+  activePage: AppPageId
+  onNavigate: (page: AppPageId) => void
+}
 
-function sidebar({ open, onClose }: SidebarProps) {
-    const sidebarItems = [
-        { label: "Home", Icon: Home },
-        { label: "Insights", Icon: Brain },
-        { label: "Gamification", Icon: BriefcaseBusiness },
-        { label: "Applications", Icon: ClipboardList },
-        { label: "Payments", Icon: Wallet },
-    ] as const;
+function sidebar({ open, onClose, activePage, onNavigate }: SidebarProps) {
 
     return (
         <aside
@@ -30,27 +31,40 @@ function sidebar({ open, onClose }: SidebarProps) {
                     style={{ backgroundColor: "var(--primary-color)" }}
                 />
                 <div className="flex flex-col gap-2">
-                    <p className="text-text-grey text-sm font-medium select-none leading-none">
-                        Gamify Flow
+                    <p className="text-text-grey text-lg font-bold select-none leading-none">
+                        Sathi
                     </p>
                 </div>
             </div>
 
             <div className="flex flex-col justify-between flex-1">
                 <ul className="flex flex-col gap-2 text-sm">
-                    {sidebarItems.map(({ label, Icon }) => (
-                        <li
-                            key={label}
-                            onClick={onClose}
-                            className="sidebar-item p-2 text-text-grey flex items-center gap-2 transition-colors rounded-[10px] hover:cursor-pointer"
-                        >
-                            <Icon className="size-5" />
-                            <span>{label}</span>
-                        </li>
-                    ))}
+                    {SIDEBAR_MAIN_ITEMS.map(({ id, label, Icon }) => {
+                        const isActive = activePage === id
+                        return (
+                            <li key={id}>
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        onNavigate(id)
+                                        onClose()
+                                    }}
+                                    className={cn(
+                                        "sidebar-item flex w-full items-center gap-2 rounded-10 p-2 text-left transition-colors hover:cursor-pointer",
+                                        isActive
+                                            ? "bg-white/95 font-medium text-primary-color shadow-[0_1px_2px_rgba(0,0,0,0.04)]"
+                                            : "text-text-grey-light",
+                                    )}
+                                >
+                                    <Icon className="size-5 shrink-0" />
+                                    <span>{label}</span>
+                                </button>
+                            </li>
+                        )
+                    })}
                 </ul>
 
-                <span className="text-text-grey flex items-center gap-2 text-sm p-2">
+                <span className="text-text-grey-light flex items-center gap-2 text-sm p-2">
                     <User className="size-5" />
                     <p>Settings</p>
                 </span>

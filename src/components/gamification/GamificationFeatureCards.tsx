@@ -77,17 +77,17 @@ function FeatureCardWaves() {
 
 function FeatureCard({ Icon, title, description }: Feature) {
   return (
-    <article className="relative flex flex-col items-center overflow-hidden rounded-2xl border border-primary-color-lightest bg-white px-5 pb-7 pt-10 text-center shadow-[0_8px_30px_-12px_rgba(0,0,0,0.12)]">
+    <article className="relative flex flex-col items-center overflow-hidden rounded-2xl border border-primary-color-lighter bg-white px-5 pb-7 pt-10 text-center shadow-[0_8px_30px_-12px_rgba(0,0,0,0.12)]">
       <FeatureCardWaves />
 
-      <div className="relative z-[1] mb-4 flex size-12 items-center justify-center rounded-lg outline-6 outline-primary-color-light">
-        <Icon className="size-6 text-primary-color-dark" />
+      <div className="relative z-1 mb-4 flex size-11 items-center justify-center rounded-md outline-8 outline-primary-color-light">
+        <Icon className="size-7 text-primary-color-dark" />
       </div>
 
-      <h3 className="relative z-[1] text-base font-medium text-primary-color-dark">
+      <h3 className="relative z-1 text-base font-medium text-text-grey">
         {title}
       </h3>
-      <p className="relative z-[1] mt-2 text-sm font-normal leading-5 text-text-grey">
+      <p className="relative z-1 mt-2 text-sm font-normal leading-5 text-text-grey-light">
         {description}
       </p>
     </article>
