@@ -1,6 +1,6 @@
 import { HeroGridBackground } from "./HeroGridBackground";
 import { GamificationFeatureCards } from "./GamificationFeatureCards";
-import { CreateRewardSystemDialog } from "./CreateRewardSystemDialog";
+import { CreateRewardSystemDialog } from "./create-reward-dialog";
 import { Button } from "@/components/ui/button";
 
 /**
